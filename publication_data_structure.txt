@@ -1,0 +1,8 @@
+Publication:
+    name = Column(String)
+    place 
+    published_date
+    reference 
+    valid 
+    author
+    publication_type
