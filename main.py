@@ -24,17 +24,21 @@ def run(playwright: Playwright) -> None:
     print(row.inner_text())
     row = page.locator('tr:has-text("Druh výsledku")')
     print(row.inner_text())
-    row = page.locator('tr:contains("Odkaz na výzkum")')
-    print(row.inner_text())
-    #texts = page.get_by_role("table").all_inner_texts()
-    #print(texts)
-    #nazev=page.query_selector(".table table-borderless table-striped table-light table-cellspacing1 border mb-0").inner_text() #umí najít jen class ne id
-    #print(nazev)
-    
-  
+    #autor
+    first_table = page.locator('tbody').nth(0)
+    third_tr = first_table.locator('tr:nth-child(1)')
+    print(third_tr.inner_text())
+    #hyperodkaz
+    first_table = page.locator('table').nth(1)
+    third_tr = first_table.locator('tr:nth-child(11)')
+    print(third_tr.inner_text())
+    #isbn
+    first_table = page.locator('table').nth(2)
+    third_tr = first_table.locator('tr:nth-child(2)')
+    print(third_tr.inner_text())
 
     # ---------------------
-    page.wait_for_timeout(1000000)
+    page.wait_for_timeout(1000)
     context.close()
     browser.close()
 
