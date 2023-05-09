@@ -1,8 +1,7 @@
 Publication:
-    name = Column(String)
-    place 
-    published_date
-    reference 
-    valid 
+    name, splněno
+    place, splněno
+    published_date, splněno
+    reference, splněno
     author
-    publication_type
+    publication_type, splněno
