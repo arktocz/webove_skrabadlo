@@ -34,7 +34,7 @@ def run(playwright: Playwright) -> None:
   
 
     # ---------------------
-    page.wait_for_timeout(10000)
+    page.wait_for_timeout(1000000)
     context.close()
     browser.close()
 
