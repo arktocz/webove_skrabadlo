@@ -40,12 +40,11 @@ read -p "Zadejte název souboru s uživateli: " filename
 # Zkontrolovat a vytvořit uživatele ze seznamu
 if [ -f $filename ]; then
   while IFS= read -r line; do
-    surname=$(echo $line | cut -d',' -f1)
-    firstname=$(echo $line | cut -d',' -f2)
-    rank=$(echo $line | cut -d',' -f3)
-    name=$(echo $line | cut -d',' -f4)
-    address=$(echo $line | cut -d',' -f5)
-    username=$(echo "${surname:0:1}${firstname}" | tr '[:upper:]' '[:lower:]')
+    rank=$(echo $line | cut -d',' -f1)
+    name=$(echo $line | cut -d',' -f2)
+    surname=$(echo $line | cut -d',' -f3)
+    address=$(echo $line | cut -d',' -f4)
+    username=$(echo "${surname:0:1}${name}" | tr '[:upper:]' '[:lower:]')
     create_user $username $group_name "$rank" "$name" "$surname" "$address"
   done < $filename
 else
