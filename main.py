@@ -11,7 +11,7 @@ def run(playwright: Playwright) -> None:
     context.set_default_timeout(2**31-1)
     page = context.new_page()
     page.goto("https://apl.unob.cz/vvi/registr?NazevVysledku=")
-
+    #scrape pro odborne knihy
     page.get_by_role("button", name="-Druh výsledku-").click()
     page.get_by_role("button", name="Odborná kniha (B)").click()
     page.get_by_role("button", name="Odborná kniha (B)", exact=True).click()
