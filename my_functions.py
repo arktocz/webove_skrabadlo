@@ -1,5 +1,24 @@
+import uuid
+#extrakce id ze stringu
+def extract_after_third_space(string):
+    words = string.split()
+    
+    if len(words) > 3:
+        result = ' '.join(words[3:])
+        return result
+    else:
+        return None
+#generovani UUID
+def generate_uuid():
+    return str(uuid.uuid4())
+
 #SCRAPE JEDNE PUBLIKACE
 def scrape_publication(publication_page):
+    #ID
+    id_locator = publication_page.get_by_text("Detail výsledku")
+    id=extract_after_third_space(id_locator.inner_text())
+    #UUID
+    uuid_publication=generate_uuid()
     #name
     name_locator = publication_page.locator('tr:has-text("Název v původním jazyce") td:nth-child(2)')
     name=name_locator.inner_text()
@@ -12,10 +31,14 @@ def scrape_publication(publication_page):
     #publication type
     publication_type_locator = publication_page.locator('tr:has-text("Druh výsledku") td:nth-child(2)')
     publication_type=publication_type_locator.inner_text()
-    #hyperodkaz
+    #link
     second_table = publication_page.locator('table').nth(1)
     eleventh_tr_second_col = second_table.locator('tr:nth-child(11) td:nth-child(2)')
     reference= eleventh_tr_second_col.inner_text()
+    #backup link
+    third_table = publication_page.locator('table').nth(2)
+    seven_tr_sec_col = third_table.locator('tr:nth-child(7) td:nth-child(2)')
+    backup_link = seven_tr_sec_col.inner_text()
     #isbn
     third_table = publication_page.locator('table').nth(2)
     second_tr_sec_col = third_table.locator('tr:nth-child(2) td:nth-child(2)')
@@ -29,8 +52,9 @@ def scrape_publication(publication_page):
         author_locator_string='tr:nth-child('+str(i)+') td:nth-child(2)'
         author = author_table.locator(author_locator_string).inner_text()
         list_of_authors.append(author)
-    publication_list=[name, place, published_date, publication_type, reference, isbn, list_of_authors]
-    return publication_list
+    #publication_list=[id, uuid_publication, name, place, published_date, publication_type, reference, isbn, list_of_authors]
+    publication_dict={"id":id, "uuid_publication":uuid_publication, "name":name, "place":place, "published_date":published_date, "publication_type":publication_type, "reference":reference, "backup_link":backup_link, "isbn":isbn, "list_of_authors":list_of_authors}
+    return publication_dict
 
 #LISTOVÁNÍ PUBLIKACEMI 
 def individual_publication_view(page, browser, max_publication): 

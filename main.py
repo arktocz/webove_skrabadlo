@@ -11,6 +11,7 @@ def run(playwright: Playwright) -> None:
     context.set_default_timeout(2**31-1)
     page = context.new_page()
     page.goto("https://apl.unob.cz/vvi/registr?NazevVysledku=")
+
     page.get_by_role("button", name="-Druh výsledku-").click()
     page.get_by_role("button", name="Odborná kniha (B)").click()
     page.get_by_role("button", name="Odborná kniha (B)", exact=True).click()
@@ -35,7 +36,7 @@ def run(playwright: Playwright) -> None:
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(publication_dict, f, ensure_ascii=False)
     print("Neplecha ukončena")
-    
+
     # ---------------------
     page.wait_for_timeout(1000)
     context.close()
